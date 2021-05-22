@@ -117,9 +117,11 @@ const controller = {
 
             const { id } = req.params;
             const user = await User.findByIdAndUpdate(id, { status: false }, { new: true });
+            const authUser = req.authUser;
             res.json({
                 message: 'User deleted',
-                user
+                user,
+                authUser
             });
 
         } catch(error) {
