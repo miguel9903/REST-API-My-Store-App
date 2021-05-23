@@ -24,7 +24,8 @@ const UserSchema = new Schema({
 
     role: {
         type: String,
-        required: true
+        required: true,
+        default: 'USER_ROLE'
     },
 
     google: {

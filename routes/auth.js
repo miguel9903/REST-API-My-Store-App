@@ -21,4 +21,14 @@ router.post('/login', [
     validateFields
 ], authCtrl.login);
 
+/**
+ * Method: Login with Google
+ * Type: Public route
+ * Restrictions: None
+ */
+router.post('/google', [
+    check('id_token', 'id_token is required').not().isEmpty(),
+    validateFields
+], authCtrl.googleSignIn);
+
 module.exports = router;
