@@ -18,7 +18,7 @@ const userCtrl = require('../controllers/user');
 /**
  * Method: Get all users
  * Type: Private route
- * Restrictions: only accessible to authenticated users who have 
+ * Restrictions: Only accessible to authenticated users who have 
  * an administrator role
  */
 router.get('/', [
@@ -29,7 +29,7 @@ router.get('/', [
 /**
  * Method: Get a single user
  * Type: Private route
- * Restrictions: only accessible to authenticated users
+ * Restrictions: Only accessible to authenticated users
  */
 router.get('/:id', [
     validateJWT,
@@ -41,7 +41,7 @@ router.get('/:id', [
 /**
  * Method: Create user
  * Type: Private route
- * Restrictions: only accessible to authenticated users who have 
+ * Restrictions: Only accessible to authenticated users who have 
  * an administrator role
  */
 router.post('/', [
@@ -58,7 +58,7 @@ router.post('/', [
 /**
  * Method: Update user
  * Type: Private route
- * Restrictions: only accessible to authenticated users
+ * Restrictions: Only accessible to authenticated users
  */
 router.put('/:id', [
     validateJWT,
@@ -73,7 +73,7 @@ router.put('/:id', [
 /**
  * Method: Delete user
  * Type: Private route
- * Restrictions: only accessible to authenticated users who have 
+ * Restrictions: Only accessible to authenticated users who have 
  * an administrator or sales role
  */
 router.delete('/:id', [

@@ -9,8 +9,15 @@ class Server {
         this.app = express();
         this.port = process.env.PORT;
         this.routePaths = {
+            auth: '/api/auth',
             user: '/api/users',
-            auth: '/api/auth'
+            category: '/api/categories',
+            subcategory: '/api/subcategories',
+            product: '/api/products',
+            gender: '/api/genders',
+            color: '/api/colors',
+            brand: '/api/brands',
+            search: '/api/search'
         };
 
         this.connectToDatabase();
@@ -31,6 +38,13 @@ class Server {
     routes() {
         this.app.use(this.routePaths.user, require('../routes/user'));
         this.app.use(this.routePaths.auth, require('../routes/auth'));
+        this.app.use(this.routePaths.category, require('../routes/category'));
+        this.app.use(this.routePaths.subcategory, require('../routes/subcategory'));
+        this.app.use(this.routePaths.product, require('../routes/product'));
+        this.app.use(this.routePaths.gender, require('../routes/gender'));
+        this.app.use(this.routePaths.color, require('../routes/color'));
+        this.app.use(this.routePaths.brand, require('../routes/brand'));
+        this.app.use(this.routePaths.search, require('../routes/search'));
     }
 
     listen() {
