@@ -23,6 +23,7 @@ const existUserEmail = async (email = '') => {
     }
 }
 
+
 // Role validators
 
 const existUserRole = async (role = '') => {
@@ -132,6 +133,16 @@ const existBrandName = async (name = '') => {
     }
 }
 
+
+// Validate collections
+
+const validateAllowedCollections = (collection = '', allowedCollections = []) => {
+    if(!allowedCollections.includes(collection)) {
+        throw new Error(`Invalid collection. The allowed collections are ${ allowedCollections.join(', ') }`);
+    }
+    return true;
+}
+
 module.exports = {
     existUserRole,
     existUserEmail,
@@ -146,5 +157,6 @@ module.exports = {
     existColorId,
     existColorName,
     existBrandId,
-    existBrandName
+    existBrandName,
+    validateAllowedCollections
 };
