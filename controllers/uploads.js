@@ -127,6 +127,7 @@ const controller = {
             cloudinary.uploader.destroy(folder + public_id);
         }
 
+        console.log(req.files);
         const { tempFilePath } = req.files.file;
         const { secure_url } = await cloudinary.uploader.upload(tempFilePath, { folder });
 

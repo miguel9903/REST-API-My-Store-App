@@ -9,19 +9,58 @@ const controller = {
 
             const { start = 0, limit = 10 } = req.query;
             const query = { status: true };
+            const { filter, value } = req.query;
+            let total = 0;
+            let products = [];
 
-            const [total, products] = await Promise.all([
-                Product.countDocuments(query),
-                Product.find(query)
-                        .skip(Number(start))
-                        .limit(Number(limit))
-                        .populate('color', 'name')
-                        .populate('brand', 'name')
-                        .populate('gender', 'name')
-                        .populate('color', 'name')
-                        .populate('user', 'name')
-                        .populate('subcategory', 'name')
-            ]);
+            if(filter) {
+
+                let filterName = {};
+
+                if(filter === 'subcategory') {                   
+                    filterName = { subcategory: value };
+                } else if (filter === 'gender') {
+                    filterName = { gender: value };
+                } else if (filter === 'brand') {
+                    filterName = { brand: value };
+                } else if (filter === 'color') {
+                    filterName = { color: value };
+                }
+
+                const results = await Promise.all([
+                    Product.countDocuments({
+                        $and: [query, filterName]
+                    }),
+                    Product.find({
+                        $and: [query, filterName]
+                    }).skip(Number(start))
+                      .limit(Number(limit))
+                      .populate('color', 'name')
+                      .populate('brand', 'name')
+                      .populate('gender', 'name')
+                      .populate('color', 'name')
+                      .populate('user', 'name')
+                      .populate('subcategory', 'name')
+                ]);
+                total = results[0];
+                products = results[1];
+
+            } else{ 
+                const results = await Promise.all([
+                    Product.countDocuments(query),
+                    Product.find(query)
+                            .skip(Number(start))
+                            .limit(Number(limit))
+                            .populate('color', 'name')
+                            .populate('brand', 'name')
+                            .populate('gender', 'name')
+                            .populate('color', 'name')
+                            .populate('user', 'name')
+                            .populate('subcategory', 'name')
+                ]);
+                total = results[0];
+                products = results[1];
+            }
 
             if(products.length === 0) {
                 return res.status(400).json({
@@ -31,7 +70,9 @@ const controller = {
 
             res.json({
                 total,
-                products
+                products,
+                filter,
+                value
             });
 
         } catch(error) {
@@ -41,7 +82,7 @@ const controller = {
             });
         }
 
-    },
+    }, 
 
     getProduct: async (req = request, res = response) => {
 
